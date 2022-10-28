@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖</title>
+</head>
+<body>
+    <!-- 使用场景
+        1、按钮连续点击，以致于发送了多次请求
+        2、调整浏览器窗口大小，resize次数过于频繁，造成计算次数过多，此时需要一步到位，就需要用到防抖
+        3、搜索框搜索输入，不需要每次输入一个字的时候就进行搜索，而且等待没有再次输入的时候就返回结果
+    -->
+    <input type="text" value="123">
+    <button id="btn">点击提交</button>
+    <script>
+        // 防止按钮连续点击
+        let btn = document.querySelector('#btn');
+        let ipt = document.querySelector("input");
+        const debounce = (() => { // 自调用
+            let timer = null; // 接收定时器
+            return (callback,time = 800) => {
+                timer && clearTimeout(timer) // 有定时器，先清除
+                timer = setTimeout(callback,time);
+            }
+        })();
+        btn.addEventListener("click", function () {
+            // 防抖原理：借助setTimeout在一定的时间间隔内，将多次处罚变为一次触发
+            debounce(()=> {
+                // 发送请求
+                console.log("请求登录")
+                console.log(ipt.value)
+            }, 2000);
+        })
+        
+    </script>
+    
+</body>
+</html>
