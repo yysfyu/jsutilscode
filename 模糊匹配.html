@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模糊匹配</title>
+</head>
+<body>
+    <input type="text" />
+    <button>点击搜索</button>
+    <script>
+        let ipt = document.querySelector("input")
+        let btn = document.querySelector("button")
+        const responseList = [
+            {id: 1, name: "张三", sex: "男"},
+            {id: 2, name: "李四" },
+            {id: 3, name: "王五" },
+            {id: 4, name: "张三", sex: "女"},
+            {id: 2, name: "李四"},
+        ]
+        const search = (list, keyword, attr = 'name') => {
+            const reg = new RegExp(keyword);
+            const arr = []; // 接收结果
+            list.forEach(item => {
+                if(reg.test(item[attr])) {
+                    arr.push(item);
+                }
+            });
+            return arr;
+        }
+        btn.addEventListener('click', function () {
+            console.log(search(responseList, ipt.value, 'name'))
+        })
+        
+    </script>
+</body>
+</html>

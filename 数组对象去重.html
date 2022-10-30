@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组对象去重</title>
+</head>
+<body>
+    <script>
+        const responseList = [
+            {id: 1, name: "张三", sex: "男"},
+            {id: 2, name: "李四" },
+            {id: 3, name: "王五" },
+            {id: 4, name: "张三", sex: "女"},
+            {id: 2, name: "李四"},
+        ]
+        console.log("去重前的数组：",responseList);
+        // 接收参数：去重的对象数组，去重依据的字段
+        const uniqueArrayObject = (arr = [], key = 'id') => {
+            if(arr.length === 0) return; // 空数组
+            let list = []; // 接收去重后的数组
+            const map = {};
+            arr.forEach (item => {
+                if(!map[item[key]]) {
+                    map[item[key]] = item;
+                }
+            });
+            list = Object.values(map);
+            console.log("去重后的数组：",list);
+            return list;
+        }
+
+        uniqueArrayObject(responseList, 'id');
+
+    </script>
+    
+</body>
+</html>

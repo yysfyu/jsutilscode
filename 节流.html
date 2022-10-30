@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节流</title>
+</head>
+<body>
+    <input type="text" />
+    <!-- 使用场景
+        滚动scroll事件，每隔1s进行一次位置计算
+        input输入框实时搜索并发送请求展示下拉列表，每隔1s发送一次请求
+    -->
+    <script>
+        // 节流：减少一段时间内事件的触发频率，例如：2s发一次请求；
+        // 只有当上一次触发时间和这次触发时间间隔大于2s之后才会去发送一次请求
+        let ipt = document.querySelector("input");
+
+        const throttle = (()=> {
+            let lastTime = 0;
+            return ((callback, time = 800)=> {
+                // 获取本次事件触发的时间戳
+                let nowTime = new Date();
+                if (nowTime - lastTime > time) {
+                    callback();
+                    lastTime = nowTime;
+                }
+            })
+        })();
+
+        ipt.addEventListener("input", function () {
+            throttle(()=> {
+                if (ipt.value == "") {
+                    return;
+                }
+                // 发送请求
+                console.log(ipt.value)
+            },2000)
+            
+        })
+
+    </script>
+</body>
+</html>
